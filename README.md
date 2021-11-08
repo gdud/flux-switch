@@ -25,11 +25,15 @@ flux bootstrap github \
 ## Change branch main -> v2
 
 ```
+flux suspend source git flux-system -n flux-system
+```
+
+```
 kubectl edit gitrepository flux-system -n flux-system
 ```
 
-... and set `spec.ref.branch` to `v2`
+... set `spec.ref.branch` to `v2` and then...
 
 ```
-flux reconcile kustomization flux-system --with-source 
+flux resume source git flux-system -n flux-system & flux reconcile kustomization flux-system --with-source 
 ```
